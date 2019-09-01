@@ -47,26 +47,26 @@ return make(game, {});
 * Actualiza el mundo cada vez que se oprime una tecla. Retorna el nuevo stado del mundo
 */
 processing.onKeyEvent = function (game, keyCode) {
-switch (keyCode) {
-case processing.UP:
-return make(game, { y: game.y - 10 });
-break;
-case processing.DOWN:
-return make(game, { y: game.y + 10 });
-break;
-case processing.LEFT:
-return make(game, { x: game.x - 10 });
-break;
-case processing.RIGHT:
-return make(game, { x: game.x + 10 });
-break;
-case 107:
-return make(game, { alto: game.alto + 5 });
-break;
-case 109:
-return make(game, { alto: game.alto - 5 });
-break;
-default:
+  switch (keyCode) {
+    case processing.UP:
+      return make(game, { y: game.y - 10 });
+      break;
+    case processing.DOWN:
+      return make(game, { y: game.y + 10 });
+      break;
+    case processing.LEFT:
+      return make(game, { x: game.x - 10 });
+      break;
+  case processing.RIGHT:
+      return make(game, { x: game.x + 10 });
+      break;
+  case 107:
+      return make(game, { alto: game.alto + 5 });
+      break;
+  case 109:
+       return make(game, { alto: game.alto - 5 });
+       break;
+  default:
 console.log(keyCode);
 return make(game, {});
 }
