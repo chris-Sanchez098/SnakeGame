@@ -1,4 +1,4 @@
-const { cons, first, rest, isEmpty, isList, length, append, filter, map } = require('functional-light');
+const { cons, first, rest, isEmpty, isList, length, append, filter, map } = require('web-lib/processing.js');
 
 /**
  * En este archivos se almacenaran las funciones que puedan o seran usadas en el proyecto snake game.
@@ -15,10 +15,8 @@ food: 0, score: 0 , highScore: 0 }
  * @example delUltimate([{ x: 3, y: 1 },{ x: 2, y: 1 },{ x: 1, y: 1 }]) / => [{ x: 3, y: 1 }, { x: 2, y: 1 }]
  */
 
-function delUltimate (snake) {
-    if (length(snake) == 1) {
-        return [];
-    } return cons(first(snake), delUltimate(rest(snake)));
+function deleteLast (snake) {
+    return snake.slice(0,length(snake)-1);
 }
 
 /**
@@ -29,7 +27,7 @@ function delUltimate (snake) {
  */
 function snakeDirection(snake, direction) {
     const head = first(snake)
-    return cons ({x: head.x + direction.x, y: head.y + direction.y},delUltimate(snake))
+    return cons ({x: head.x + direction.x, y: head.y + direction.y},deleteLast(snake))
 }
 
 /**
@@ -47,3 +45,11 @@ function crashesHer (snake) {
         return crashesHer(cons(snake[0],rest(rest(snake))));
     }
 }
+
+
+
+
+
+
+
+
