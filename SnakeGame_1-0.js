@@ -72,7 +72,15 @@ function growSnake (snake, direction) {
     return cons({ x: snake[0].x + direction.x, y: snake[0].y + direction.y }, snake)
   }
 
+/**
+ * retorna un objeto con dos atributos (x, y), ambos serán un número entero entre 1 y 30
+ * @param {} "no param"
+ * @returns {Object}
+ */
 
+function newfood() {
+    return cons({x: Math.ceil(Math.random()*(sizemap / width )), y: Math.ceil(Math.random()*(sizemap / height))}, [])
+}
 
 
 
