@@ -61,6 +61,18 @@ function crashWall (snake) {
 }
 
 
+/**
+ * De un lista de objetos(snake) y un objeto(direction) retorna una nueva lista de objetos , donde hay un nuevo objeto que ocupa la primer posición, respetando la dirreción original
+ * @param {Array} snake 
+ * @param {Object} direction 
+ * @returns {Array}
+ */
+
+function growSnake (snake, direction) {
+    return cons({ x: snake[0].x + direction.x, y: snake[0].y + direction.y }, snake)
+  }
+
+
 
 
 
