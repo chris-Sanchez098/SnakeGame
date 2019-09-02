@@ -6,7 +6,7 @@ const { cons, first, rest, isEmpty, isList, length, append, filter, map } = requ
  */
 
 universe = { mysnake: [{ x: 3, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 1 }], direction: { x: 1, y: 0 }, sentido: 'right',
-food: 0, score: 0 , highScore: 0 }
+food: [{x:10, y:10}], score: 0 , highScore: 0 }
 
 /**
  * Elimina una posicion de nuestra snake (cola).
