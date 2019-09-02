@@ -36,6 +36,7 @@ function snakeDirection(snake, direction) {
  * @returns {Boolean}
  * @example crashesHer(universe.mysnake) // => false
  */
+
 function crashesHer (snake) {
     if (length(snake) == 1) {
         return false; 
@@ -46,6 +47,18 @@ function crashesHer (snake) {
     }
 }
 
+/**
+ * Determinar si snake (lista de objectos) tuvo una colicioón con algun muro, toma de referencia la 'cabeza' para hacer esta comparación.
+ * @param {Array} snake
+ * @returns {boolean}
+ */
+function crashWall (snake) {
+    if (snake[0].x == sizemap / width || snake[0].x < 0 || snake[0].y == sizemap / height || snake[0].y < 0) {
+        return true;
+    } else { 
+        return  false;
+    }
+}
 
 
 
