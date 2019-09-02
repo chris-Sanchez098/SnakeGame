@@ -31,7 +31,7 @@ function snakeDirection(snake, direction) {
 }
 
 /**
- * Determina si la snake se choco consigo mismo, toma de referencia la 'cabeza' para hacer esta comparación.
+ * Determinar si snake (lista de objectos) tuvo una colicioón con, toma de referencia la 'cabeza' para hacer esta comparación.
  * @param {Array} snake
  * @returns {Boolean}
  * @example crashesHer(universe.mysnake) // => false
