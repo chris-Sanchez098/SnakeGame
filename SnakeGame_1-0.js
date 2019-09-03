@@ -8,11 +8,24 @@ const { cons, first, rest, isEmpty, isList, length, append, filter, map } = requ
 universe = { mysnake: [{ x: 3, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 1 }], direction: { x: 1, y: 0 }, sentido: 'right',
 food: [{x:10, y:10}], score: 0 , highScore: 0 }
 
+
+/**
+  * Retorna una copia de un objeto, puede tener nuevos atributos o dar un nuevo valor para los existentes
+  * @param {Object} snake
+  * @param {} attribute
+  * @returns {Object}
+  */
+  
+function make(data, attribute) {
+    return Object.assign({}, data, attribute);
+}
+
+
 /**
  * Elimina una posicion de nuestra snake (cola).
  * @param {Array} snake
  * @returns {Array}
- * @example delUltimate([{ x: 3, y: 1 },{ x: 2, y: 1 },{ x: 1, y: 1 }]) / => [{ x: 3, y: 1 }, { x: 2, y: 1 }]
+ * @example deleteLast([{ x: 3, y: 1 },{ x: 2, y: 1 },{ x: 1, y: 1 }]) / => [{ x: 3, y: 1 }, { x: 2, y: 1 }]
  */
 
 function deleteLast (snake) {
@@ -27,7 +40,7 @@ function deleteLast (snake) {
  */
 function snakeDirection(snake, direction) {
     const head = first(snake)
-    return cons ({x: head.x + direction.x, y: head.y + direction.y},deleteLast(snake))
+    return cons({ x: snake[0].x + direction.x, y: snake[0].y + direction.y }, deleteLast(snake))
 }
 
 /**
@@ -53,11 +66,7 @@ function crashesHer (snake) {
  * @returns {boolean}
  */
 function crashWall (snake) {
-    if (snake[0].x == sizemap / width || snake[0].x < 0 || snake[0].y == sizemap / height || snake[0].y < 0) {
-        return true;
-    } else { 
-        return  false;
-    }
+    return (snake[0].x == sizemap / width || snake[0].x < 0 || snake[0].y == sizemap / height || snake[0].y < 0);
 }
 
 
