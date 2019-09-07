@@ -1,99 +1,21 @@
-<canvas id="canvas" width="300" height="300"></canvas>
-<script src="web-lib/processing.js"></script>
-<script src="web-lib/functional-light.js"></script>
-
-<script>
-//Vamos a usar http://processingjs.org/
-// o https://p5js.org/reference/
-// Importamos las librerias
-let { append, cons, first, isEmpty, isList, length, rest} = functionalLight;
- 
-const width = 20
-const height = 20
-const sizemap = 600
-const universe = { mysnake: [{ x: 3, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 1 }], direction: { x: 1, y: 0 }, sentido: 'right',
-food: [{x:10, y:10}], score: 0 , highScore: 0 }
-
-function make(data, attribute) {
-  return Object.assign({}, data, attribute);
+<html>
+<style>
+.text-center {
+text-align: center;
+margin-left: auto;
+margin-right: auto;
 }
-
-
-function sketchProc(processing) {
-/**
-* Esto se llama antes de iniciar el juego
-*/
-processing.setup = function () {
-processing.frameRate(10);
-processing.size(sizemap,sizemap);
-processing.background(171, 164, 164);
-processing.state = universe;
-}
-// Dibuja algo en el canvas. Aqui se pone todo lo que quieras pintar
-processing.drawGame = function (universe) {
-processing.background(171, 164, 164);
-processing.fill(254,65,31)
-processing.fill(213, 20, 20);
-(universe.food).forEach(part => {
-processing.ellipse(part.x * width - width / 2, part.y * height - height / 2, width - 1, height - 1);
-});
-processing.fill(1, 1, 1);
-(universe.mysnake).forEach(part =>  {
-processing.rect(part.x * width, part.y * height, width, height);
-});
-}
-
-// Esta es la función que pinta todo. Se ejecuta 60 veces por segundo. 
-// No cambie esta función. Su código debe ir en drawGame
-
-processing.draw = function () {
-processing.drawGame(processing.state);
-processing.state = processing.onTic(processing.state);
-};
-
-/**
-* Actualiza el mundo en cada tic del reloj. Retorna el nuevo stado del mundo
-*/
-processing.onTic = function (universe) {
-return make(universe, {});
-}
-/**
-* Actualiza el mundo cada vez que se oprime una tecla. Retorna el nuevo stado del mundo
-*/
-processing.onKeyEvent = function (universe, keyCode) {
-switch (keyCode) {
-  case processing.UP:
-      return make(universe, { });
-      break;
-  case processing.DOWN:
-      return make(universe, {});
-      break;
-  case processing.LEFT:
-      return make(universe, { });
-      break;
-  case processing.RIGHT:
-      return make(universe, { });
-      break;
-  case 107:
-      return make(universe, { });
-      break;
-  case 109:
-      return make(universe, { });
-      break;
-  default:
-     console.log(keyCode);
-     return make(universe, {}); 
-}
-}
-
-// Esta función se ejecuta cada vez que presionamos una tecla. 
-// No cambie esta función. Su código debe ir en onKeyEvent
-processing.keyPressed = function () {
-processing.state = processing.onKeyEvent(processing.state, processing.keyCode);
-}
-
-}
-var canvas = document.getElementById("canvas");
-// Adjuntamos nuestro sketch al framework de processing
-var processingInstance = new Processing(canvas, sketchProc);
-</script>
+</style>    
+    <head>
+        <h1> <center> Snake Game </center> </h1> 
+    </head>
+<body>
+    <div class="text-center">
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <script src="web-lib/processing.js"></script>
+    <script src="web-lib/functional-light.js"></script>
+    <script src="web-lib/SnakeGame_1-0.js"></script>
+    <script src="package/sweetalert2/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="package/sweetalert2/dist/sweetalert2.min.css">
+    </body>
+</html>
