@@ -180,8 +180,8 @@ function sketchProc(processing) {
     processing.frameRate(frame);
     processing.size(sizemapx, sizemapy);
     processing.background(80, 80, 100);
-    img = processing.loadImage("Image/image.jpg");
-    mode0 = processing.loadImage("Image/play.png");
+    img = processing.loadImage("Img/image.jpg");
+    mode0 = processing.loadImage("Img/play.png");
     // processing.img = processing.loadImage("image.jpg")
     processing.state = universe;
     //processing.println("hello web!");
