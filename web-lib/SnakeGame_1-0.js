@@ -290,29 +290,13 @@ function sketchProc(processing) {
               return make(world, { direccion: { x: 1, y: 0 } });
             }
             break;
-          case 32:
-            return make(world, { mysnake: growSnake(world.mysnake, world.direccion) });
-            break;
-          case 78:
-            processing.setSpeed(frame);
-            Arpanauts.play();
-            return make(universe, { food: newfood() });
-            break;
-          case 17:
-            processing.setSpeed(30);
-            return make(world, {});
-            break;
+          case 82:
+              return make (universe, { food: newfood() })
           default:
             console.log(keyCode);
             return make(world, {});
             break;
         }
-      case 2:
-        break;
-      default:
-        console.log(keyCode);
-        return make(world, {});
-        break;
     }
   }
 
@@ -345,7 +329,7 @@ function sketchProc(processing) {
         text: "Ingresa un nombre de usuario",
         type: 'success',
         confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Jugar',
+        confirmButtonText: 'Siguiente',
         input: 'text',
         inputPlaceholder: 'Username',
         inputValidator: (value) => {
