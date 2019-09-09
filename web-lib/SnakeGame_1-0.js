@@ -180,8 +180,8 @@ function sketchProc(processing) {
     processing.frameRate(frame);
     processing.size(sizemapx, sizemapy);
     processing.background(80, 80, 100);
-    img = processing.loadImage("image.jpg");
-    mode0 = processing.loadImage("mode0.gif");
+    img = processing.loadImage("Image/image.jpg");
+    mode0 = processing.loadImage("Image/play.png");
     // processing.img = processing.loadImage("image.jpg")
     processing.state = universe;
     //processing.println("hello web!");
@@ -214,7 +214,7 @@ function sketchProc(processing) {
         processing.text("Highscore: " + ((world.score > universe.highscore) ? world.score : universe.highscore), width, sizemapy - height * 2);
         break;
       default:
-        processing.image(mode0, -140, -50);
+        processing.image(mode0, 0, 0);
         //processing.text("CLICK TO PLAY", 400, 280, 1000);
         break;
     }
