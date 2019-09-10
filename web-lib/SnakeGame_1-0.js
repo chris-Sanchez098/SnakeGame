@@ -54,7 +54,7 @@ let frame = 6
 const sizemapx = 800
 const sizemapy = 560
 const universe = {
-  mysnake: [{x: 4, y: 1 }, { x: 3, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 1 }], direccion: { x: 1, y: 0 },
+  mysnake: [{ x: 4, y: 1 }, { x: 3, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 1 }], direccion: { x: 1, y: 0 },
   food: newfood(), score: 0, mode: 0, highscore: 0 + JSON.parse(window.localStorage.getItem('high'))
 }
 
@@ -136,7 +136,7 @@ function crashWall(snake) {
 */
 
 function eat(snake, food) {
-    return (snake[0].y == food[0].y - 1 && snake[0].x == food[0].x - 1)
+  return (snake[0].y == food[0].y - 1 && snake[0].x == food[0].x - 1)
 }
 
 /**
@@ -191,8 +191,8 @@ function sketchProc(processing) {
         });
         //processing.fill(108,182,47);
         (world.mysnake).slice(0, -1).forEach(part => {
-          processing.image(skin, world.mysnake[0].x * height, world.mysnake[0].y * width);
-          processing.rect(part.x * width, part.y * height, width, height);
+          processing.image(skin, part.x * height, part.y * width);
+          //processing.rect(part.x * width, part.y * height, width, height);
         });
         processing.fill(240, 240, 240)
         processing.textFont(processing.PFont, 18);
@@ -223,7 +223,7 @@ function sketchProc(processing) {
           Nip.play();
           return make(world, { mysnake: growSnake(world.mysnake, world.direccion), food: newfood(), score: world.score + 1 });
         }
-        if (world.score == frame){
+        if (world.score == frame) {
           processing.setSpeed(frame * 2)
           return make(world, { mysnake: snakeDirection(world.mysnake, world.direccion) });
         }
@@ -236,7 +236,7 @@ function sketchProc(processing) {
   }
 
   processing.onKeyEvent = function (world, keyCode) {
-  processing.drawGame(world);
+    processing.drawGame(world);
     switch (world.mode) {
       case 1:
         if (crashWall(world.mysnake) || crashesHer(world.mysnake)) {
@@ -245,46 +245,49 @@ function sketchProc(processing) {
           processing.setSpeed(frame);
           return make(world, { mysnake: [{ x: isNaN, y: isNaN }], food: [{ x: 0, y: 0 }], score: 0, mode: 0 });
         } switch (keyCode) {
-        case processing.UP:
+          case processing.UP:
             if (world.direccion.y === 1) {
               return make(world, {});
             } else {
               return make(processing.onTic(world), { direccion: { x: 0, y: -1 } });
             }
             break;
-        case processing.DOWN:
+          case processing.DOWN:
             if (world.direccion.y === -1) {
               return make(world, {});
             } else {
               return make(processing.onTic(world), { direccion: { x: 0, y: 1 } });
             }
             break;
-        case processing.LEFT:
+          case processing.LEFT:
             if (world.direccion.x === 1) {
               return make(world, {});
             } else {
               return make(processing.onTic(world), { direccion: { x: -1, y: 0 } });
             }
             break;
-        case processing.RIGHT:
+          case processing.RIGHT:
             if (world.direccion.x === -1) {
               return make(world, {});
             } else {
               return make(processing.onTic(world), { direccion: { x: 1, y: 0 } });
             }
             break;
-        case 82:
+          case 82:
             return make(universe, { food: newfood() });
             break;
-        default:
-          console.log(keyCode);
-          return make(world, {});
-          break;
+          default:
+            console.log(keyCode);
+            return make(world, {});
+            break;
+        }
+      default:
+        return make(world, {});
+        break;
     }
   }
-}
 
-processing.onMouseEvent = function (world, event) {
+  processing.onMouseEvent = function (world, event) {
     if (event.action === 'click') {
       return make(world, { mode: 1 })
     }
@@ -345,11 +348,11 @@ processing.onMouseEvent = function (world, event) {
           confirmButtonText: 'Jugar &rarr;'
         })
       })
-    })()    
-};
+    })()
+  };
 
 
-// alert cuando el juego termina, "reinicia el juego" 
+  // alert cuando el juego termina, "reinicia el juego" 
   function end(world) {
     Swal.fire({
       title: 'GAME OVER',
@@ -394,10 +397,10 @@ processing.onMouseEvent = function (world, event) {
       { action: "release", mouseX: processing.mouseX, mouseY: processing.mouseY, mouseButton: processing.mouseButton });
   }
 
-  processing.setSpeed = function(value) {
+  processing.setSpeed = function (value) {
     processing.frameRate(value);
   }
-  
+
 }
 
 var canvas = document.getElementById("canvas");
