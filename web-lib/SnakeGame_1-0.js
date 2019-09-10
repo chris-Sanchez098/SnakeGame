@@ -4,9 +4,7 @@
 // o https://p5js.org/reference/
 // Importamos las librerias
 
-
 let { append, cons, first, isEmpty, isList, length, rest } = functionalLight;
-
 
 //window.alert('Hi');
 //Swal.fire('Any fool can use a computer')
@@ -26,8 +24,9 @@ let Arpanauts = new Howl({
   }
 });
 
+// Sonino de mordisco
 let Nip = new Howl({
-  src: ['Audio/Nip.mp3'],
+  src: ['Audio/eat.mp3'],
   volume: 1,
   rate: 2.5,
   onplayerror: function () {
@@ -37,6 +36,7 @@ let Nip = new Howl({
   }
 });
 
+// sonido de choque
 let Pop = new Howl({
   src: ['Audio/Pop.mp3'],
   volume: 1,
@@ -50,14 +50,14 @@ let Pop = new Howl({
 
 const height = 20
 const width = 20
-const frame = 8
+let frame = 6
 const sizemapx = 800
 const sizemapy = 560
 const universe = {
-  mysnake: [{ x: 3, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 1 }], direccion: { x: 1, y: 0 },
+  mysnake: [{x: 4, y: 1 }, { x: 3, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 1 }], direccion: { x: 1, y: 0 },
   food: newfood(), score: 0, mode: 0, highscore: 0 + JSON.parse(window.localStorage.getItem('high'))
 }
-//
+
 /**
 * Elimina una posicion de nuestra snake (cola).
 * @param {Array} snake
@@ -65,10 +65,8 @@ const universe = {
 * @example deleteLast([{ x: 3, y: 1 },{ x: 2, y: 1 },{ x: 1, y: 1 }]) / => [{ x: 3, y: 1 }, { x: 2, y: 1 }]
 */
 
-
-
 function deleteLast(snake) {
-  return snake.slice(0, length(snake) - 1);
+  return snake.slice(0, -1);
 }
 
 /**
@@ -92,7 +90,6 @@ function snakeDirection(snake, direction) {
 function growSnake(snake, direction) {
   return cons({ x: snake[0].x + direction.x, y: snake[0].y + direction.y }, snake)
 }
-
 
 /**
 * Determinar si snake (lista de objectos) tuvo una colición contra ella misma, toma de referencia la 'cabeza' para hacer esta comparación.
@@ -131,7 +128,6 @@ function crashWall(snake) {
   return (snake[0].x == sizemapx / width || snake[0].x < 0 || snake[0].y == sizemapy / height || snake[0].y < 0);
 }
 
-
 /**
 * Retornar si un primer objeto de una lista(snake) pertence a otra listas de objetos(food), objetos con atributos (x,y)
 * @param {Array} snake 
@@ -139,15 +135,9 @@ function crashWall(snake) {
 * @returns
 */
 
-
 function eat(snake, food) {
-  if (length(food) == 1) {
-    if (snake[0].y == food[0].y - 1 && snake[0].x == food[0].x - 1) {
-      return true;
-    } return false;
-  } return eat(snake, (rest(food)));
+    return (snake[0].y == food[0].y - 1 && snake[0].x == food[0].x - 1)
 }
-
 
 /**
 * retorna un objeto con dos atributos (x, y), ambos serán un número entero entre 1 y 30
@@ -165,6 +155,7 @@ Esta configurada para pintar colores claros dentro del rango (87-255) y la entra
 es un Math.random entre 1 y 2. Cuando la entrada es 1 pinta colores aletorios y 
 cuando la entrada es 2 pinta blanco (255). Esto para los colores no varíen tan rápido.
 */
+/*
 function colorrgb(n) {
   if (n == 1) {
     return (Math.floor(Math.random() * (255 - 87)) + 87);
@@ -172,6 +163,7 @@ function colorrgb(n) {
     return 255;
   }
 }
+*/
 
 function sketchProc(processing) {
   open();
@@ -181,14 +173,10 @@ function sketchProc(processing) {
     processing.size(sizemapx, sizemapy);
     processing.background(80, 80, 100);
     img = processing.loadImage("Img/fondo.jpg");
+    skin = processing.loadImage("Img/skin.jpg");
     mode0 = processing.loadImage("Img/play.png");
-    // processing.img = processing.loadImage("image.jpg")
     processing.state = universe;
-    //processing.println("hello web!");
-
-
   }
-
 
   // Dibuja algo en el canvas. Aqui se pone todo lo que quieras pintar
   processing.drawGame = function (world) {
@@ -201,10 +189,9 @@ function sketchProc(processing) {
         (world.food).forEach(part => {
           processing.ellipse(part.x * width - width / 2, part.y * height - height / 2, width - 1, height - 1);
         });
-        processing.fill(colorrgb(Math.floor(Math.random() * 2)),
-          colorrgb(Math.floor(Math.random() * 2)),
-          colorrgb(Math.floor(Math.random() * 2)));
-        (world.mysnake).forEach(part => {
+        //processing.fill(108,182,47);
+        (world.mysnake).slice(0, -1).forEach(part => {
+          processing.image(skin, world.mysnake[0].x * height, world.mysnake[0].y * width);
           processing.rect(part.x * width, part.y * height, width, height);
         });
         processing.fill(240, 240, 240)
@@ -215,12 +202,10 @@ function sketchProc(processing) {
         break;
       default:
         processing.image(mode0, 0, 0);
-        //processing.text("CLICK TO PLAY", 400, 280, 1000);
         break;
     }
 
   }
-
 
   processing.onTic = function (world) {
     switch (world.mode) {
@@ -229,7 +214,7 @@ function sketchProc(processing) {
           if (world.score > universe.highscore) {
             window.localStorage.setItem('high', JSON.stringify(world.score))
           }
-          processing.setSpeed(8)
+          processing.setSpeed(frame)
           end(world);
           Pop.play();
           Arpanauts.stop();
@@ -250,10 +235,8 @@ function sketchProc(processing) {
     }
   }
 
-
-
-
   processing.onKeyEvent = function (world, keyCode) {
+  processing.drawGame(world);
     switch (world.mode) {
       case 1:
         if (crashWall(world.mysnake) || crashesHer(world.mysnake)) {
@@ -262,45 +245,46 @@ function sketchProc(processing) {
           processing.setSpeed(frame);
           return make(world, { mysnake: [{ x: isNaN, y: isNaN }], food: [{ x: 0, y: 0 }], score: 0, mode: 0 });
         } switch (keyCode) {
-          case processing.UP:
+        case processing.UP:
             if (world.direccion.y === 1) {
               return make(world, {});
             } else {
-              return make(world, { direccion: { x: 0, y: -1 } });
+              return make(processing.onTic(world), { direccion: { x: 0, y: -1 } });
             }
             break;
-          case processing.DOWN:
+        case processing.DOWN:
             if (world.direccion.y === -1) {
               return make(world, {});
             } else {
-              return make(world, { direccion: { x: 0, y: 1 } });
+              return make(processing.onTic(world), { direccion: { x: 0, y: 1 } });
             }
             break;
-          case processing.LEFT:
+        case processing.LEFT:
             if (world.direccion.x === 1) {
               return make(world, {});
             } else {
-              return make(world, { direccion: { x: -1, y: -0 } });
+              return make(processing.onTic(world), { direccion: { x: -1, y: 0 } });
             }
             break;
-          case processing.RIGHT:
+        case processing.RIGHT:
             if (world.direccion.x === -1) {
               return make(world, {});
             } else {
-              return make(world, { direccion: { x: 1, y: 0 } });
+              return make(processing.onTic(world), { direccion: { x: 1, y: 0 } });
             }
             break;
-          case 82:
-              return make (universe, { food: newfood() })
-          default:
-            console.log(keyCode);
-            return make(world, {});
+        case 82:
+            return make(universe, { food: newfood() });
             break;
-        }
+        default:
+          console.log(keyCode);
+          return make(world, {});
+          break;
     }
   }
+}
 
-  processing.onMouseEvent = function (world, event) {
+processing.onMouseEvent = function (world, event) {
     if (event.action === 'click') {
       return make(world, { mode: 1 })
     }
@@ -322,31 +306,47 @@ function sketchProc(processing) {
   // llama un alert al cargar la pagina, pedirá un nombre de usuario o lo hará por defecto
   function open() {
     (async () => {
-
       const { value: name } = await Swal.fire({
         position: 'center',
-        title: 'Disfruta el juego',
-        text: "Ingresa un nombre de usuario",
+        title: 'Ingresa un nombre de usuario',
         type: 'success',
         confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Siguiente',
+        confirmButtonText: 'Siguiente &rarr;',
         input: 'text',
         inputPlaceholder: 'Username',
         inputValidator: (value) => {
           if (!value) {
-            value = 'Unnamed'
+            value = 'Player'
             window.localStorage.setItem('Name', JSON.stringify(value))
           } window.localStorage.setItem('Name', JSON.stringify(value))
-  
         }
-      })  
-    })()
-      //imageUrl: 'C:/Users/Chris/Documents/Snake Game/web-lib/prueba.gif',
-      //imageWidth: 200,
-      //imageHeight: 200,
-      //imageAlt: 'Custom image',
-    
-  };
+      }).then((result) => {
+        if (!result.value) {
+          Swal.fire({
+            position: 'center',
+            title: 'Disfruta el juego',
+            imageUrl: "C:/Users/Chris/Documents/SnakeGame/Img/flechas.gif",
+            imageWidth: 200,
+            imageHeight: 180,
+            text: "Intruciones:Arriba, abajo, Izquierda, Derecha",
+            type: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Siguiente &rarr;'
+          })
+        } Swal.fire({
+          position: 'center',
+          title: 'Disfruta el juego',
+          imageUrl: "C:/Users/Chris/Documents/SnakeGame/Img/flechas.gif",
+          imageWidth: 200,
+          imageHeight: 150,
+          text: "Intruciones:Arriba, abajo, Izquierda, Derecha",
+          type: 'success',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Jugar &rarr;'
+        })
+      })
+    })()    
+};
 
 
 // alert cuando el juego termina, "reinicia el juego" 
@@ -355,12 +355,14 @@ function sketchProc(processing) {
       title: 'GAME OVER',
       text: "Puntaje total: " + world.score,
       type: 'error',
+      showCancelButton: true,
+      cancelButtonText: 'Salir',
+      cancelButtonColor: '#d33',
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Jugar nuevamente'
     }).then((result) => {
       if (result.value) {
         Arpanauts.play()
-        console.log(world);
       }
     })
   };
@@ -397,8 +399,6 @@ function sketchProc(processing) {
   }
   
 }
-
-
 
 var canvas = document.getElementById("canvas");
 
